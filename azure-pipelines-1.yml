@@ -1,0 +1,67 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'aeba40f9-b5e6-43a2-bb35-21cd17c01c3a'
+  imageRepository: 'xbadcodecook'
+  containerRegistry: 'madcookregistry.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Backend/CookRun/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:  
+  - job: versionJob
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - powershell: |
+          $branch = ('$(Build.SourceBranch)') -replace 'refs/heads/'
+          echo $branch
+          Write-Host ("##vso[task.setvariable variable=branch;isOutput=true]$branch")
+        name: setVersionStep  
+  - job: Build
+    displayName: Build
+    dependsOn: versionJob
+    condition: succeeded() 
+    variables:
+      tag: $[ dependencies.versionJob.outputs['setVersionStep.branch'] ]
+      appVersion: 1.0.0.$(Build.BuildId)
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - powershell: |
+          echo $(appVersion)  
+    - task: Docker@2
+      displayName: Build
+      inputs:
+        command: build
+        containerRegistry: | 
+          $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        buildContext: '.'
+        arguments: '--build-arg nuget_pat=$(nuget_pat) --build-arg appVersion=$(appVersion)'
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Push
+      inputs:
+        command: push
+        containerRegistry: | 
+          $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
+        tags: |
+          $(tag)
