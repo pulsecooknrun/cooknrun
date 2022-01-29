@@ -226,10 +226,10 @@ namespace AmoClient
         {
             var parameters = new List<Tuple<string, string>>
                 {
-                    new Tuple<string, string>("filter[pipe][4406956][]", "142"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "143"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "40928554"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "40928557"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "143"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                     new Tuple<string, string>("filter[cf][608242][from]", startDateTime.ToString("dd.MM.yyyy")),
                     new Tuple<string, string>("filter[cf][608242][to]", endDateTime.ToString("dd.MM.yyyy")),
                 };
