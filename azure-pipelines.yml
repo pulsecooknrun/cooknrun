@@ -11,7 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'aeba40f9-b5e6-43a2-bb35-21cd17c01c3a'
-  imageRepository: 'xbadcodecook'
+  imageRepository: 'pulsecooknrun'
   containerRegistry: 'madcookregistry.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Backend/CookRun/Dockerfile'
   tag: '$(Build.BuildId)'
