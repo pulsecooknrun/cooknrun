@@ -22,18 +22,46 @@ variables:
 stages:
 - stage: Build
   displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
+  jobs:  
+  - job: versionJob
     pool:
       vmImage: $(vmImageName)
     steps:
+      - powershell: |
+          $branch = ('$(Build.SourceBranch)') -replace 'refs/heads/'
+          echo $branch
+          Write-Host ("##vso[task.setvariable variable=branch;isOutput=true]$branch")
+        name: setVersionStep  
+  - job: Build
+    displayName: Build
+    dependsOn: versionJob
+    condition: succeeded() 
+    variables:
+      tag: $[ dependencies.versionJob.outputs['setVersionStep.branch'] ]
+      appVersion: 1.0.0.$(Build.BuildId)
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - powershell: |
+          echo $(appVersion)  
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Build
       inputs:
-        command: buildAndPush
+        command: build
+        containerRegistry: | 
+          $(dockerRegistryServiceConnection)
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        buildContext: '.'
+        arguments: '--build-arg nuget_pat=$(nuget_pat) --build-arg appVersion=$(appVersion)'
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Push
+      inputs:
+        command: push
+        containerRegistry: | 
+          $(dockerRegistryServiceConnection)
+        repository: $(imageRepository)
         tags: |
           $(tag)
