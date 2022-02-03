@@ -57,6 +57,7 @@ namespace CookRun.Services
             users.Add(new AmoManager { Name = "а_СанктПетербург", Id = "7337209" });
             users.Add(new AmoManager { Name = "а_Сочи", Id = "7507468" });
             users.Add(new AmoManager { Name = "а_Краснодар", Id = "7636588" });
+            users.Add(new AmoManager { Name = "а_Балашиха", Id = "7830271" });
 
             var authorizeResponce = amoProxyService.Authorize();
             var token = "access_token=" + authorizeResponce.access_token + "; refresh_token=" + authorizeResponce.refresh_token + ";";
