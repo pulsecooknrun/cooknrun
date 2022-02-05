@@ -45,19 +45,19 @@ namespace CookRun.Services
             applicationContext.JobReports.Add(jobReport);
 
             var users = new List<AmoManager>();
-            users.Add(new AmoManager { Name = "а_Курская", Id = "7150507" });
-            users.Add(new AmoManager { Name = "а_Владивосток", Id = "7183879" });
-            users.Add(new AmoManager { Name = "а_Строгино", Id = "7183897" });
-            users.Add(new AmoManager { Name = "а_РостовНаДону", Id = "7183906" });
-            users.Add(new AmoManager { Name = "а_Казань", Id = "7222321" });
-            users.Add(new AmoManager { Name = "а_Хабаровск", Id = "7237606" });
-            users.Add(new AmoManager { Name = "а_Уфа", Id = "7249252" });
-            users.Add(new AmoManager { Name = "а_Новосибирск", Id = "7249255" });
-            users.Add(new AmoManager { Name = "а_Екатеринбург", Id = "7337203" });
-            users.Add(new AmoManager { Name = "а_СанктПетербург", Id = "7337209" });
-            users.Add(new AmoManager { Name = "а_Сочи", Id = "7507468" });
-            users.Add(new AmoManager { Name = "а_Краснодар", Id = "7636588" });
-            users.Add(new AmoManager { Name = "а_Балашиха", Id = "7830271" });
+            users.Add(new AmoManager { Name = "Курская", Id = "7150507" });
+            users.Add(new AmoManager { Name = "Владивосток", Id = "7183879" });
+            users.Add(new AmoManager { Name = "Строгино", Id = "7183897" });
+            users.Add(new AmoManager { Name = "РостовНаДону", Id = "7183906" });
+            users.Add(new AmoManager { Name = "Казань", Id = "7222321" });
+            users.Add(new AmoManager { Name = "Хабаровск", Id = "7237606" });
+            users.Add(new AmoManager { Name = "Уфа", Id = "7249252" });
+            users.Add(new AmoManager { Name = "Новосибирск", Id = "7249255" });
+            users.Add(new AmoManager { Name = "Екатеринбург", Id = "7337203" });
+            users.Add(new AmoManager { Name = "СанктПетербург", Id = "7337209" });
+            users.Add(new AmoManager { Name = "Сочи", Id = "7507468" });
+            users.Add(new AmoManager { Name = "Краснодар", Id = "7636588" });
+            users.Add(new AmoManager { Name = "Балашиха", Id = "7830271" });
 
             var authorizeResponce = amoProxyService.Authorize();
             var token = "access_token=" + authorizeResponce.access_token + "; refresh_token=" + authorizeResponce.refresh_token + ";";
