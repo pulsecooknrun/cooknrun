@@ -119,6 +119,7 @@ namespace CookRun.Services
                     }
                     else
                     {
+                        amoDayReport.ProjectName = user.Name;//может так префиксы уберутся
                         amoDayReport.Leads = leads;
                         amoDayReport.Closed = closed;
                         amoDayReport.LeadsWithoutTasks = leadsWithoutTasks;
