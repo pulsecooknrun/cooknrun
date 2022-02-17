@@ -120,10 +120,10 @@ namespace AmoClient
 
             var parametersGame = new List<Tuple<string, string>>
                 {
-                    new Tuple<string, string>("filter[pipe][4406956][]", "142"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "143"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "40928554"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "40928557"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "143"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                 };
             var leadsGame = GetCount(token, "4406959", parametersSale, startDateTime, endDateTime, userId);
 
@@ -141,7 +141,7 @@ namespace AmoClient
 
             var parametersGame = new List<Tuple<string, string>>
                 {
-                    new Tuple<string, string>("filter[pipe][4406956][]", "143"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "143"),
                 };
             var closedGame = GetCount(token, "4406959", parametersGame, null, null, userId);
 
@@ -210,10 +210,10 @@ namespace AmoClient
 
             var parametersGame = new List<Tuple<string, string>>
                 {
-                    new Tuple<string, string>("filter[pipe][4406956][]", "142"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "143"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "40928554"),
-                    new Tuple<string, string>("filter[pipe][4406956][]", "40928557"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "143"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                     new Tuple<string, string>("filter[cf][1130257][from]", startDateTime.ToString("dd.MM.yyyy")),
                     new Tuple<string, string>("filter[cf][1130257][to]", endDateTime.ToString("dd.MM.yyyy")),
                 };
