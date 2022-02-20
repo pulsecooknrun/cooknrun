@@ -237,6 +237,27 @@ namespace AmoClient
             return sales;
         }
 
+        public int GetCorrectLeads(DateTime startDateTime, DateTime endDateTime, string token, string userId)
+		{
+            var parameters = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406956][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "143"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928542"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928545"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928548"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928551"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928584"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928587"),
+                    new Tuple<string, string>("filter[loss_reason_id][]", "0"),
+                    new Tuple<string, string>("filter[loss_reason_id][]", "7656397"),
+                    new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
+                    new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
+                };
+            var correctLeads = GetCount(token, "4406956", parameters, startDateTime, endDateTime, userId);
+            return correctLeads;
+		}
+
         public int GetCount(string token, string dealType, List<Tuple<string, string>> roistatFilterItemNos, DateTime? startDate, DateTime? endDate, string user)
         {
             var client = new RestClient("https://infernocook.amocrm.ru/ajax/leads/sum/" + dealType);

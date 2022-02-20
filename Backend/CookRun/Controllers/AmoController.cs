@@ -81,6 +81,8 @@ namespace RoistatApi.Controllers
                     amoSummReport.MonthLeads = monthReport.Leads;
                     amoSummReport.MonthClosedLeads = monthReport.Closed;
                     amoSummReport.MonthSales = monthReport.Sales;
+                    amoSummReport.MonthCorrectLeads = monthReport.CorrectLeads;
+
                 }
 
                 var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
@@ -93,9 +95,8 @@ namespace RoistatApi.Controllers
                     if (amoSummReport.LeadsWithoutTasksTrend != 0 && amoSummReport.TodayLeadsWithoutTasks != 0)
                         amoSummReport.LeadsWithoutTasksTrendPercents = (int)((decimal)amoSummReport.LeadsWithoutTasksTrend / (decimal)amoSummReport.TodayLeadsWithoutTasks * (decimal)100);
                 }
-
                 if (amoSummReport.MonthLeads != 0)
-                    amoSummReport.Conversion = (decimal)amoSummReport.MonthSales / (decimal)amoSummReport.MonthLeads;
+                    amoSummReport.Conversion = 100 * (decimal)amoSummReport.MonthSales / (decimal)amoSummReport.MonthCorrectLeads;
 
                 amoSummReports.Add(amoSummReport);
             }
@@ -120,5 +121,6 @@ namespace RoistatApi.Controllers
         public int TodaySales { get; set; }
         public int MonthSales { get; set; }
         public decimal Conversion { get; set; }
+        public int MonthCorrectLeads { get; set; }
     }
 }

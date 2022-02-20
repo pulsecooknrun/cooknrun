@@ -10,5 +10,6 @@ namespace CookRun.Domain.Entities
         public int Leads { get; set; }
         public int Closed { get; set; }
         public int Sales { get; set; }
+        public int CorrectLeads { get; set; }
     }
 }

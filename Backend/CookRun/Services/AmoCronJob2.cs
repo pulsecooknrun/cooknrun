@@ -69,6 +69,8 @@ namespace CookRun.Services
                 var leads = amoProxyService.GetLeads(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var closed = amoProxyService.GetClosed(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var sales = amoProxyService.GetSales(month, DateTime.Today.AddDays(-1), token, user.Id);
+                var correctLeads = amoProxyService.GetCorrectLeads(month, DateTime.Today.AddDays(-1), token, user.Id);
+
 
                 var amoMonthReport = applicationContext.AmoMonthReports.FirstOrDefault(x => x.ProjectName == user.Name && x.Date == month);
                 if (amoMonthReport == null)
@@ -79,7 +81,8 @@ namespace CookRun.Services
                         Date = month,
                         Leads = leads,
                         Closed = closed,
-                        Sales = sales
+                        Sales = sales,
+                        CorrectLeads = correctLeads
                     };
                     applicationContext.AmoMonthReports.Add(amoMonthReport);
                 }
@@ -88,6 +91,7 @@ namespace CookRun.Services
                     amoMonthReport.Leads = leads;
                     amoMonthReport.Closed = closed;
                     amoMonthReport.Sales = sales;
+                    amoMonthReport.CorrectLeads = correctLeads;
                 }
 
                 for (int i = 0; i < 10; i++)
