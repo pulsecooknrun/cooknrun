@@ -96,7 +96,7 @@ namespace RoistatApi.Controllers
                         amoSummReport.LeadsWithoutTasksTrendPercents = (int)((decimal)amoSummReport.LeadsWithoutTasksTrend / (decimal)amoSummReport.TodayLeadsWithoutTasks * (decimal)100);
                 }
                 if (amoSummReport.MonthLeads != 0)
-                    amoSummReport.Conversion = 100 * (decimal)amoSummReport.MonthSales / (decimal)amoSummReport.MonthCorrectLeads;
+                    amoSummReport.Conversion = 100 * (decimal)amoSummReport.MonthCorrectLeads / (decimal)amoSummReport.MonthLeads;
 
                 amoSummReports.Add(amoSummReport);
             }
