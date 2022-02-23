@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -188,7 +187,7 @@ namespace RoistatApi.Controllers
         }
 
         [HttpGet("GetAmoConversionCharts")]
-        public List<ArrayList> GetAmoConversionCharts()
+        public List<object> GetAmoConversionCharts()
         {
             var todayReports = _applicationContext.AmoDayReports
                 .AsNoTracking()
@@ -201,9 +200,9 @@ namespace RoistatApi.Controllers
                 .Where(x => x.Date.Date == monthDateTime)
                 .ToList();
 
-            List<ArrayList> amoConversionCharts = new();
-            ArrayList projects = new();
-            ArrayList conversions = new();
+            List<object> amoConversionCharts = new();
+            List<string> projects = new();
+            List<decimal> conversions = new();
 
             foreach (var todayReport in todayReports)
             {
@@ -233,7 +232,7 @@ namespace RoistatApi.Controllers
         }
 
         [HttpGet("GetAmoMonthSalesCharts")]
-        public List<ArrayList> GetAmoMonthSalesCharts()
+        public List<object> GetAmoMonthSalesCharts()
         {
             var todayReports = _applicationContext.AmoDayReports
                 .AsNoTracking()
@@ -246,9 +245,9 @@ namespace RoistatApi.Controllers
                 .Where(x => x.Date.Date == monthDateTime)
                 .ToList();
 
-            List<ArrayList> amoMonthSalesCharts = new();
-            ArrayList projects = new();
-            ArrayList monthSalesList = new();
+            List<object> amoMonthSalesCharts = new();
+            List<string> projects = new();
+            List<int> monthSalesList = new();
 
             foreach (var todayReport in todayReports)
             {
