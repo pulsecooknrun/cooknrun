@@ -71,7 +71,7 @@ namespace RoistatApi.Controllers
                 var amoSummReport = new AmoSummReport();
                 amoSummReport.Project = todayReport.ProjectName;
                 amoSummReport.TodayLeads = todayReport.Leads;
-                amoSummReport.TodayClosedLeads = todayReport.Closed;
+                //amoSummReport.TodayClosedLeads = todayReport.Closed;
                 amoSummReport.TodayOverdue = todayReport.Overdue;
                 amoSummReport.TodayLeadsWithoutTasks = todayReport.LeadsWithoutTasks;
 
@@ -79,7 +79,7 @@ namespace RoistatApi.Controllers
                 if (monthReport != null)
                 {
                     amoSummReport.MonthLeads = monthReport.Leads;
-                    amoSummReport.MonthClosedLeads = monthReport.Closed;
+                    //amoSummReport.MonthClosedLeads = monthReport.Closed;
                     amoSummReport.MonthSales = monthReport.Sales;
                     amoSummReport.MonthCorrectLeads = monthReport.CorrectLeads;
 
@@ -109,18 +109,42 @@ namespace RoistatApi.Controllers
         public string Project { get; set; }
         public int TodayLeads { get; set; }
         public int MonthLeads { get; set; }
-        public int TodayClosedLeads { get; set; }
-        public int MonthClosedLeads { get; set; }
+        public int MonthCorrectLeads { get; set; }
         public int TodayOverdue { get; set; }
+        public int TodayLeadsWithoutTasks { get; set; }
+        public int TodayForehead { get; set; }
+        public int TodaySales { get; set; }
+        public int MonthSales { get; set; }
+        //public int TodayClosedLeads { get; set; }
+        //public int MonthClosedLeads { get; set; }
         //public int OverdueTrend { get; set; }
         //public int OverdueTrendPercents { get; set; }
-        public int TodayLeadsWithoutTasks { get; set; }
         //public int LeadsWithoutTasksTrend { get; set; }
         //public int LeadsWithoutTasksTrendPercents { get; set; }
+        public decimal Conversion { get; set; }
+    }
+
+    public class AmoFullReport
+	{
+        public string Project { get; set; }
+        public int TodayLeads { get; set; }
+        public int MonthLeads { get; set; }
+        public int MonthCorrectLeads { get; set; }
+        public int TodayOverdue { get; set; }
+        public int TodayLeadsWithoutTasks { get; set; }
         public int TodayForehead { get; set; }
         public int TodaySales { get; set; }
         public int MonthSales { get; set; }
         public decimal Conversion { get; set; }
+    }
+
+    public class AmoSalesReport
+	{
+        public string Project { get; set; }
+        public int TodayForehead { get; set; }
+        public int TodaySales { get; set; }
+        public int MonthSales { get; set; }
         public int MonthCorrectLeads { get; set; }
+        public decimal Conversion { get; set; }
     }
 }
