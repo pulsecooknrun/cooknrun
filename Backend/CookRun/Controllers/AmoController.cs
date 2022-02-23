@@ -46,6 +46,7 @@ namespace RoistatApi.Controllers
             return null;
         }
 
+        /*
         [HttpGet("GetAmoSummReports")]
         public List<AmoSummReport> GetAmoSummReports()
         {
@@ -86,7 +87,7 @@ namespace RoistatApi.Controllers
                 }
 
                 var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
-                /*if (monthReport != null)
+                if (monthReport != null)
                 {
                     amoSummReport.OverdueTrend = todayReport.Overdue - yesterdayReport.Overdue;
                     if (amoSummReport.OverdueTrend != 0 && amoSummReport.TodayOverdue != 0)
@@ -94,7 +95,8 @@ namespace RoistatApi.Controllers
                     amoSummReport.LeadsWithoutTasksTrend = todayReport.LeadsWithoutTasks - yesterdayReport.LeadsWithoutTasks;
                     if (amoSummReport.LeadsWithoutTasksTrend != 0 && amoSummReport.TodayLeadsWithoutTasks != 0)
                         amoSummReport.LeadsWithoutTasksTrendPercents = (int)((decimal)amoSummReport.LeadsWithoutTasksTrend / (decimal)amoSummReport.TodayLeadsWithoutTasks * (decimal)100);
-                }*/
+                }
+
                 if (amoSummReport.MonthCorrectLeads != 0) 
                     amoSummReport.Conversion = 100 * (decimal)amoSummReport.MonthSales / (decimal)amoSummReport.MonthCorrectLeads;
 
@@ -102,6 +104,7 @@ namespace RoistatApi.Controllers
             }
             return amoSummReports;
         }
+        */
 
         [HttpGet("GetAmoFullReports")]
         public List<AmoFullReport> GetAmoFullReports()
@@ -109,11 +112,6 @@ namespace RoistatApi.Controllers
             var todayReports = _applicationContext.AmoDayReports
                 .AsNoTracking()
                 .Where(x => x.Date.Date == DateTime.Today.AddDays(-1))
-                .ToList();
-
-            var yesterdayReports = _applicationContext.AmoDayReports
-                .AsNoTracking()
-                .Where(x => x.Date.Date == DateTime.Today.AddDays(-2))
                 .ToList();
 
             var monthDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
@@ -133,17 +131,14 @@ namespace RoistatApi.Controllers
                 amoFullReport.TodayForehead = todayReport.Forehead;
                 amoFullReport.TodaySales = todayReport.Sales;
 
-
                 var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+
                 if (monthReport != null)
                 {
                     amoFullReport.MonthLeads = monthReport.Leads;
                     amoFullReport.MonthSales = monthReport.Sales;
                     amoFullReport.MonthCorrectLeads = monthReport.CorrectLeads;
-
                 }
-
-                var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
 
                 if (amoFullReport.MonthCorrectLeads != 0)
                     amoFullReport.Conversion = 100 * (decimal)amoFullReport.MonthSales / (decimal)amoFullReport.MonthCorrectLeads;
@@ -161,11 +156,6 @@ namespace RoistatApi.Controllers
                 .Where(x => x.Date.Date == DateTime.Today.AddDays(-1))
                 .ToList();
 
-            var yesterdayReports = _applicationContext.AmoDayReports
-                .AsNoTracking()
-                .Where(x => x.Date.Date == DateTime.Today.AddDays(-2))
-                .ToList();
-
             var monthDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             var monthReports = _applicationContext.AmoMonthReports
                 .AsNoTracking()
@@ -181,13 +171,12 @@ namespace RoistatApi.Controllers
                 amoSalesReport.TodaySales = todayReport.Sales;
 
                 var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+
                 if (monthReport != null)
                 {
                     amoSalesReport.MonthSales = monthReport.Sales;
                     amoSalesReport.MonthCorrectLeads = monthReport.CorrectLeads;
                 }
-
-                var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
 
                 if (amoSalesReport.MonthCorrectLeads != 0)
                     amoSalesReport.Conversion = 100 * (decimal)amoSalesReport.MonthSales / (decimal)amoSalesReport.MonthCorrectLeads;
@@ -197,8 +186,95 @@ namespace RoistatApi.Controllers
             return amoSalesReports;
         }
 
+        [HttpGet("GetAmoConversionCharts")]
+        public List<AmoConversionChart> GetAmoConversionCharts()
+        {
+            var todayReports = _applicationContext.AmoDayReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == DateTime.Today.AddDays(-1))
+                .ToList();
+
+            var monthDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var monthReports = _applicationContext.AmoMonthReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == monthDateTime)
+                .ToList();
+
+            var amoConversionCharts = new List<AmoConversionChart>();
+            List<string> projects = new List<string>();
+            List<decimal> conversions = new List<decimal>();
+
+            foreach (var todayReport in todayReports)
+            {
+                int monthSales = 0;
+                int monthCorrectLeads = 0;
+                decimal conversion = 0;
+
+                projects.Add(todayReport.ProjectName);
+
+                var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+                if (monthReport != null)
+                {
+                    monthSales = monthReport.Sales;
+                    monthCorrectLeads = monthReport.CorrectLeads;
+                }
+
+                if (monthCorrectLeads != 0)
+                    conversion = 100 * (decimal)monthSales / (decimal)monthCorrectLeads;
+
+                conversions.Add(conversion);
+            }
+
+            var amoConversionChart = new AmoConversionChart();
+            amoConversionChart.project = projects.ToArray();
+            amoConversionChart.conversion = conversions.ToArray();
+            amoConversionCharts.Add(amoConversionChart);
+
+            return amoConversionCharts;
+        }
+
+        [HttpGet("GetAmoMonthSalesCharts")]
+        public List<AmoMonthSalesChart> GetAmoMonthSalesCharts()
+        {
+            var todayReports = _applicationContext.AmoDayReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == DateTime.Today.AddDays(-1))
+                .ToList();
+
+            var monthDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var monthReports = _applicationContext.AmoMonthReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == monthDateTime)
+                .ToList();
+
+            var amoMonthSalesCharts = new List<AmoMonthSalesChart>();
+            List<string> projects = new List<string>();
+            List<int> monthSalesList = new List<int>();
+
+            foreach (var todayReport in todayReports)
+            {
+                int monthSales = 0;
+
+                projects.Add(todayReport.ProjectName);
+
+                var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+                if (monthReport != null)
+                    monthSales = monthReport.Sales;
+
+                monthSalesList.Add(monthSales);
+            }
+
+            var amoMonthSalesChart = new AmoMonthSalesChart();
+            amoMonthSalesChart.project = projects.ToArray();
+            amoMonthSalesChart.monthSales = monthSalesList.ToArray();
+            amoMonthSalesCharts.Add(amoMonthSalesChart);
+
+            return amoMonthSalesCharts;
+        }
+
     }
 
+    /*
     public class AmoSummReport
     {
         public string Project { get; set; }
@@ -218,6 +294,7 @@ namespace RoistatApi.Controllers
         //public int LeadsWithoutTasksTrendPercents { get; set; }
         public decimal Conversion { get; set; }
     }
+    */
 
     public class AmoFullReport
 	{
@@ -241,5 +318,17 @@ namespace RoistatApi.Controllers
         public int MonthSales { get; set; }
         public int MonthCorrectLeads { get; set; }
         public decimal Conversion { get; set; }
+    }
+
+    public class AmoConversionChart
+    {
+        public string[] project;
+        public decimal[] conversion;
+    }
+
+    public class AmoMonthSalesChart
+	{
+        public string[] project;
+        public int[] monthSales;
     }
 }
