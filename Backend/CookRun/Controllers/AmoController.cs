@@ -102,6 +102,101 @@ namespace RoistatApi.Controllers
             }
             return amoSummReports;
         }
+
+        [HttpGet("GetAmoFullReports")]
+        public List<AmoFullReport> GetAmoFullReports()
+        {
+            var todayReports = _applicationContext.AmoDayReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == DateTime.Today.AddDays(-1))
+                .ToList();
+
+            var yesterdayReports = _applicationContext.AmoDayReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == DateTime.Today.AddDays(-2))
+                .ToList();
+
+            var monthDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var monthReports = _applicationContext.AmoMonthReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == monthDateTime)
+                .ToList();
+
+            var amoFullReports = new List<AmoFullReport>();
+            foreach (var todayReport in todayReports)
+            {
+                var amoFullReport = new AmoFullReport();
+                amoFullReport.Project = todayReport.ProjectName;
+                amoFullReport.TodayLeads = todayReport.Leads;
+                amoFullReport.TodayOverdue = todayReport.Overdue;
+                amoFullReport.TodayLeadsWithoutTasks = todayReport.LeadsWithoutTasks;
+                amoFullReport.TodayForehead = todayReport.Forehead;
+                amoFullReport.TodaySales = todayReport.Sales;
+
+
+                var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+                if (monthReport != null)
+                {
+                    amoFullReport.MonthLeads = monthReport.Leads;
+                    amoFullReport.MonthSales = monthReport.Sales;
+                    amoFullReport.MonthCorrectLeads = monthReport.CorrectLeads;
+
+                }
+
+                var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+
+                if (amoFullReport.MonthCorrectLeads != 0)
+                    amoFullReport.Conversion = 100 * (decimal)amoFullReport.MonthSales / (decimal)amoFullReport.MonthCorrectLeads;
+
+                amoFullReports.Add(amoFullReport);
+            }
+            return amoFullReports;
+        }
+
+        [HttpGet("GetAmoSalesReports")]
+        public List<AmoSalesReport> GetAmoSalesReports()
+        {
+            var todayReports = _applicationContext.AmoDayReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == DateTime.Today.AddDays(-1))
+                .ToList();
+
+            var yesterdayReports = _applicationContext.AmoDayReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == DateTime.Today.AddDays(-2))
+                .ToList();
+
+            var monthDateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var monthReports = _applicationContext.AmoMonthReports
+                .AsNoTracking()
+                .Where(x => x.Date.Date == monthDateTime)
+                .ToList();
+
+            var amoSalesReports = new List<AmoSalesReport>();
+            foreach (var todayReport in todayReports)
+            {
+                var amoSalesReport = new AmoSalesReport();
+                amoSalesReport.Project = todayReport.ProjectName;
+                amoSalesReport.TodayForehead = todayReport.Forehead;
+                amoSalesReport.TodaySales = todayReport.Sales;
+
+                var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+                if (monthReport != null)
+                {
+                    amoSalesReport.MonthSales = monthReport.Sales;
+                    amoSalesReport.MonthCorrectLeads = monthReport.CorrectLeads;
+                }
+
+                var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
+
+                if (amoSalesReport.MonthCorrectLeads != 0)
+                    amoSalesReport.Conversion = 100 * (decimal)amoSalesReport.MonthSales / (decimal)amoSalesReport.MonthCorrectLeads;
+
+                amoSalesReports.Add(amoSalesReport);
+            }
+            return amoSalesReports;
+        }
+
     }
 
     public class AmoSummReport
