@@ -86,7 +86,7 @@ namespace RoistatApi.Controllers
                 }
 
                 var yesterdayReport = yesterdayReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
-                if (monthReport != null)
+                /*if (monthReport != null)
                 {
                     amoSummReport.OverdueTrend = todayReport.Overdue - yesterdayReport.Overdue;
                     if (amoSummReport.OverdueTrend != 0 && amoSummReport.TodayOverdue != 0)
@@ -94,8 +94,8 @@ namespace RoistatApi.Controllers
                     amoSummReport.LeadsWithoutTasksTrend = todayReport.LeadsWithoutTasks - yesterdayReport.LeadsWithoutTasks;
                     if (amoSummReport.LeadsWithoutTasksTrend != 0 && amoSummReport.TodayLeadsWithoutTasks != 0)
                         amoSummReport.LeadsWithoutTasksTrendPercents = (int)((decimal)amoSummReport.LeadsWithoutTasksTrend / (decimal)amoSummReport.TodayLeadsWithoutTasks * (decimal)100);
-                }
-                if (amoSummReport.MonthLeads != 0)
+                }*/
+                if (amoSummReport.MonthCorrectLeads != 0) 
                     amoSummReport.Conversion = 100 * (decimal)amoSummReport.MonthSales / (decimal)amoSummReport.MonthCorrectLeads;
 
                 amoSummReports.Add(amoSummReport);
@@ -112,11 +112,11 @@ namespace RoistatApi.Controllers
         public int TodayClosedLeads { get; set; }
         public int MonthClosedLeads { get; set; }
         public int TodayOverdue { get; set; }
-        public int OverdueTrend { get; set; }
-        public int OverdueTrendPercents { get; set; }
+        //public int OverdueTrend { get; set; }
+        //public int OverdueTrendPercents { get; set; }
         public int TodayLeadsWithoutTasks { get; set; }
-        public int LeadsWithoutTasksTrend { get; set; }
-        public int LeadsWithoutTasksTrendPercents { get; set; }
+        //public int LeadsWithoutTasksTrend { get; set; }
+        //public int LeadsWithoutTasksTrendPercents { get; set; }
         public int TodayForehead { get; set; }
         public int TodaySales { get; set; }
         public int MonthSales { get; set; }
