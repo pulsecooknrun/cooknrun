@@ -226,8 +226,8 @@ namespace RoistatApi.Controllers
 
             }
 
-            amoConversionCharts.project = projects.ToArray();
-            amoConversionCharts.conversion = conversions.ToArray();
+            amoConversionCharts.Project = projects.ToArray();
+            amoConversionCharts.Conversion = conversions.ToArray();
 
             return amoConversionCharts;
         }
@@ -259,8 +259,8 @@ namespace RoistatApi.Controllers
                     monthSales.Add(monthReport.Sales);
             }
 
-            amoMonthSalesCharts.project = projects.ToArray();
-            amoMonthSalesCharts.monthSales = monthSales.ToArray();
+            amoMonthSalesCharts.Project = projects.ToArray();
+            amoMonthSalesCharts.MonthSales = monthSales.ToArray();
 
             return amoMonthSalesCharts;
         }
@@ -315,12 +315,12 @@ namespace RoistatApi.Controllers
 
     public class AmoConversionChart
 	{
-        public string[] project;
-        public decimal[] conversion;
+        public string[] Project { get; set; }
+        public decimal[] Conversion { get; set; }
     }
     public class AmoMonthSalesChart
-	{
-        public string[] project;
-        public int[] monthSales;
+    {
+        public string[] Project { get; set; }
+        public int[] MonthSales { get; set; }
     }
 }
