@@ -220,7 +220,7 @@ namespace RoistatApi.Controllers
                 }
 
                 if (monthCorrectLeads != 0)
-                    conversion = 100 * (decimal)monthSales / (decimal)monthCorrectLeads;
+                    conversion = Math.Round(100 * (decimal)monthSales / (decimal)monthCorrectLeads);
 
                 conversions.Add(conversion);
 
