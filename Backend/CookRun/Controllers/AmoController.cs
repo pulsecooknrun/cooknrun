@@ -141,7 +141,7 @@ namespace RoistatApi.Controllers
                 }
 
                 if (amoFullReport.MonthCorrectLeads != 0)
-                    amoFullReport.Conversion = 100 * (decimal)amoFullReport.MonthSales / (decimal)amoFullReport.MonthCorrectLeads;
+                    amoFullReport.Conversion = Math.Round(100 * (decimal)amoFullReport.MonthSales / (decimal)amoFullReport.MonthCorrectLeads, 2);
 
                 amoFullReports.Add(amoFullReport);
             }
@@ -179,7 +179,7 @@ namespace RoistatApi.Controllers
                 }
 
                 if (amoSalesReport.MonthCorrectLeads != 0)
-                    amoSalesReport.Conversion = 100 * (decimal)amoSalesReport.MonthSales / (decimal)amoSalesReport.MonthCorrectLeads;
+                    amoSalesReport.Conversion = Math.Round(100 * (decimal)amoSalesReport.MonthSales / (decimal)amoSalesReport.MonthCorrectLeads, 2);
 
                 amoSalesReports.Add(amoSalesReport);
             }
@@ -220,7 +220,7 @@ namespace RoistatApi.Controllers
                 }
 
                 if (monthCorrectLeads != 0)
-                    conversion = Math.Round(100 * (decimal)monthSales / (decimal)monthCorrectLeads);
+                    conversion = Math.Round(100 * (decimal)monthSales / (decimal)monthCorrectLeads, 2);
 
                 conversions.Add(conversion);
 
