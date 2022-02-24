@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -188,7 +187,7 @@ namespace RoistatApi.Controllers
         }
 
         [HttpGet("GetAmoConversionCharts")]
-        public ArrayList GetAmoConversionCharts()
+        public AmoConversionChart GetAmoConversionCharts()
         {
             var todayReports = _applicationContext.AmoDayReports
                 .AsNoTracking()
@@ -201,19 +200,17 @@ namespace RoistatApi.Controllers
                 .Where(x => x.Date.Date == monthDateTime)
                 .ToList();
 
-            ArrayList amoConversionCharts = new();
-            List<AmoConversionChartsProjectList> projects = new();
-            List<AmoConversionChartsConversionList> conversions = new();
+            var amoConversionCharts = new AmoConversionChart();
+            List<string> projects = new();
+            List<decimal> conversions = new();
 
             foreach (var todayReport in todayReports)
             {
-                var project = new AmoConversionChartsProjectList();
-                var _conversion = new AmoConversionChartsConversionList();
                 int monthSales = 0;
                 int monthCorrectLeads = 0;
                 decimal conversion = 0;
 
-                project.Project = todayReport.ProjectName;
+                projects.Add(todayReport.ProjectName);
 
                 var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
                 if (monthReport != null)
@@ -225,20 +222,18 @@ namespace RoistatApi.Controllers
                 if (monthCorrectLeads != 0)
                     conversion = 100 * (decimal)monthSales / (decimal)monthCorrectLeads;
 
-                _conversion.Conversion = conversion;
+                conversions.Add(conversion);
 
-                projects.Add(project);
-                conversions.Add(_conversion);
             }
 
-            amoConversionCharts.Add(projects);
-            amoConversionCharts.Add(conversions);
+            amoConversionCharts.project = projects.ToArray();
+            amoConversionCharts.conversion = conversions.ToArray();
 
             return amoConversionCharts;
         }
 
         [HttpGet("GetAmoMonthSalesCharts")]
-        public ArrayList GetAmoMonthSalesCharts()
+        public AmoMonthSalesChart GetAmoMonthSalesCharts()
         {
             var todayReports = _applicationContext.AmoDayReports
                 .AsNoTracking()
@@ -251,27 +246,21 @@ namespace RoistatApi.Controllers
                 .Where(x => x.Date.Date == monthDateTime)
                 .ToList();
 
-            ArrayList amoMonthSalesCharts = new();
-            List<AmoMonthSalesChartsProjectList> projects = new();
-            List<AmoMonthSalesChartsMonthSalesList> monthSales = new();
+            var amoMonthSalesCharts = new AmoMonthSalesChart();
+            List<string> projects = new();
+            List<int> monthSales = new();
 
             foreach (var todayReport in todayReports)
             {
-                var project = new AmoMonthSalesChartsProjectList();
-                var _monthSales = new AmoMonthSalesChartsMonthSalesList();
-
-                project.Project = todayReport.ProjectName;
+                projects.Add(todayReport.ProjectName);
 
                 var monthReport = monthReports.FirstOrDefault(x => x.ProjectName == todayReport.ProjectName);
                 if (monthReport != null)
-                    _monthSales.MonthSales = monthReport.Sales;
-
-                projects.Add(project);
-                monthSales.Add(_monthSales);
+                    monthSales.Add(monthReport.Sales);
             }
 
-            amoMonthSalesCharts.Add(projects);
-            amoMonthSalesCharts.Add(monthSales);
+            amoMonthSalesCharts.project = projects.ToArray();
+            amoMonthSalesCharts.monthSales = monthSales.ToArray();
 
             return amoMonthSalesCharts;
         }
@@ -324,24 +313,14 @@ namespace RoistatApi.Controllers
         public decimal Conversion { get; set; }
     }
 
-    public class AmoConversionChartsProjectList
+    public class AmoConversionChart
 	{
-        public string Project { get; set; }
-
+        public string[] project;
+        public decimal[] conversion;
     }
-    public class AmoConversionChartsConversionList
+    public class AmoMonthSalesChart
 	{
-        public decimal Conversion { get; set; }
-
-    }
-    public class AmoMonthSalesChartsProjectList
-	{
-        public string Project { get; set; }
-
-    }
-    public class AmoMonthSalesChartsMonthSalesList
-	{
-        public int MonthSales { get; set; }
-
+        public string[] project;
+        public int[] monthSales;
     }
 }
