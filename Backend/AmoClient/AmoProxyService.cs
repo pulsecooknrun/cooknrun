@@ -125,7 +125,7 @@ namespace AmoClient
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                 };
-            var leadsGame = GetCount(token, "4406959", parametersSale, startDateTime, endDateTime, userId);
+            var leadsGame = GetCount(token, "4406959", parametersGame, startDateTime, endDateTime, userId);
 
             return leadsSale + leadsGame;
         }
@@ -254,7 +254,7 @@ namespace AmoClient
                     new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
                 };
-            var correctLeads = GetCount(token, "4406956", parameters, startDateTime, endDateTime, userId);
+            var correctLeads = GetCount(token, "4406956", parameters, null, null, userId);
             return correctLeads;
 		}
 
