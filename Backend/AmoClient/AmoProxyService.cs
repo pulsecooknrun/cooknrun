@@ -253,6 +253,8 @@ namespace AmoClient
                     new Tuple<string, string>("filter[loss_reason_id][]", "7656397"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
+                    new Tuple<string, string>("filter[cf][608242][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][608242][to]", endDateTime.ToString("dd.MM.yyyy")),
                 };
             var correctLeadsSale = GetCount(token, "4406956", parametersSale, null, null, userId);
 
@@ -261,6 +263,8 @@ namespace AmoClient
                     new Tuple<string, string>("filter[pipe][4406959][]", "142"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                    new Tuple<string, string>("filter[cf][608242][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][608242][to]", endDateTime.ToString("dd.MM.yyyy")),
                 };
             var correctLeadsGame = GetCount(token, "4406959", parametersGame, null, null, userId);
 
