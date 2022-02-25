@@ -83,7 +83,7 @@ namespace CookRun.Services
                         Leads = leads,
                         Closed = closed,
                         Sales = sales,
-                        CorrectLeads = correctLeads + sales
+                        CorrectLeads = correctLeads
                     };
                     applicationContext.AmoMonthReports.Add(amoMonthReport);
                 }
@@ -92,7 +92,7 @@ namespace CookRun.Services
                     amoMonthReport.Leads = leads;
                     amoMonthReport.Closed = closed;
                     amoMonthReport.Sales = sales;
-                    amoMonthReport.CorrectLeads = correctLeads + sales;
+                    amoMonthReport.CorrectLeads = correctLeads;
                 }
 
                 for (int i = 0; i < 10; i++)

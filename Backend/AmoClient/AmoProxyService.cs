@@ -239,7 +239,7 @@ namespace AmoClient
 
         public int GetCorrectLeads(DateTime startDateTime, DateTime endDateTime, string token, string userId)
 		{
-            var parameters = new List<Tuple<string, string>>
+            var parametersSale = new List<Tuple<string, string>>
                 {
                     new Tuple<string, string>("filter[pipe][4406956][]", "142"),
                     new Tuple<string, string>("filter[pipe][4406956][]", "143"),
@@ -254,8 +254,17 @@ namespace AmoClient
                     new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
                 };
-            var correctLeads = GetCount(token, "4406956", parameters, null, null, userId);
-            return correctLeads;
+            var correctLeadsSale = GetCount(token, "4406956", parametersSale, null, null, userId);
+
+            var parametersGame = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                };
+            var correctLeadsGame = GetCount(token, "4406959", parametersGame, null, null, userId);
+
+            return correctLeadsSale + correctLeadsGame;
 		}
 
         public int GetCount(string token, string dealType, List<Tuple<string, string>> roistatFilterItemNos, DateTime? startDate, DateTime? endDate, string user)
