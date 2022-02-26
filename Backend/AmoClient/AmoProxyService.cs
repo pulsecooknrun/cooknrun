@@ -121,7 +121,7 @@ namespace AmoClient
             var parametersGame = new List<Tuple<string, string>>
                 {
                     new Tuple<string, string>("filter[pipe][4406959][]", "142"),
-                    new Tuple<string, string>("filter[pipe][4406959][]", "143"),
+                    //new Tuple<string, string>("filter[pipe][4406959][]", "143"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                 };
@@ -249,22 +249,23 @@ namespace AmoClient
                     new Tuple<string, string>("filter[pipe][4406956][]", "40928551"),
                     new Tuple<string, string>("filter[pipe][4406956][]", "40928584"),
                     new Tuple<string, string>("filter[pipe][4406956][]", "40928587"),
-                    new Tuple<string, string>("filter[loss_reason_id][]", "0"),
-                    new Tuple<string, string>("filter[loss_reason_id][]", "7656397"),
-                    new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
-                    new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
+                    //new Tuple<string, string>("filter[loss_reason_id][]", "0"),
+                    //new Tuple<string, string>("filter[loss_reason_id][]", "7656397"),
+                    //new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
+                    //new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
                 };
-            var correctLeadsSale = GetCount(token, "4406956", parametersSale, null, null, userId);
-            /*
+            var correctLeadsSale = GetCount(token, "4406956", parametersSale, startDateTime, endDateTime, userId);
+
             var parametersGame = new List<Tuple<string, string>>
                 {
                     new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    //new Tuple<string, string>("filter[pipe][4406959][]", "143"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                 };
-            var correctLeadsGame = GetCount(token, "4406959", parametersGame, null, null, userId);
-            */
-            return correctLeadsSale;// + correctLeadsGame;
+            var correctLeadsGame = GetCount(token, "4406959", parametersGame, startDateTime, endDateTime, userId);
+            
+            return correctLeadsSale + correctLeadsGame;
 		}
 
         public int GetCount(string token, string dealType, List<Tuple<string, string>> roistatFilterItemNos, DateTime? startDate, DateTime? endDate, string user)
