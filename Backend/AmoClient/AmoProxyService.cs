@@ -241,20 +241,20 @@ namespace AmoClient
 		{
             var parametersSale = new List<Tuple<string, string>>
                 {
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "142"),
                     new Tuple<string, string>("filter[pipe][4406956][]", "143"),
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "40928542"),
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "40928545"),
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "40928548"),
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "40928551"),
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "40928584"),
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "40928587"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928542"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928545"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928548"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928551"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928584"),
+                    new Tuple<string, string>("filter[pipe][4406956][]", "40928587"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "0"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "7656397"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
                     new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
                 };
-            var correctLeadsSale = GetCount(token, "4406956", parametersSale, startDateTime, endDateTime, userId);
+            var correctLeadsSale = GetCount(token, "4406956", parametersSale, null, null, userId);
 
             var parametersGame = new List<Tuple<string, string>>
                 {
@@ -263,7 +263,7 @@ namespace AmoClient
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
                     new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                 };
-            var correctLeadsGame = GetCount(token, "4406959", parametersGame, startDateTime, endDateTime, userId);
+            var correctLeadsGame = GetCount(token, "4406959", parametersGame, null, null, userId);
             
             return correctLeadsSale + correctLeadsGame;
 		}
