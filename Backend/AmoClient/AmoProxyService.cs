@@ -289,7 +289,7 @@ namespace AmoClient
         {
             var parameters = new List<Tuple<string, string>>
                 {
-                    //new Tuple<string, string>("filter[pipe][4406956][]", "143"),
+                      new Tuple<string, string>("filter[pipe][4406956][]", "143"),
                       new Tuple<string, string>("filter[loss_reason_id][]", "0"),
                       new Tuple<string, string>("filter[loss_reason_id][]", "7656397"),
                       new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
