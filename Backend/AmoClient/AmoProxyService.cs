@@ -295,7 +295,7 @@ namespace AmoClient
                       new Tuple<string, string>("filter[loss_reason_id][]", "7656400"),
                       new Tuple<string, string>("filter[loss_reason_id][]", "8661985"),
                 };
-            var correctLeadsTwo = GetCount(token, "4406956", parameters, null, null, userId);
+            var correctLeadsTwo = GetCount(token, "4406956", parameters, startDateTime, endDateTime, userId);
 
             return correctLeadsTwo;
         }
