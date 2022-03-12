@@ -34,10 +34,6 @@ namespace AmoClient
                     lead.Budget = item.Value.GetProperty("budget").GetInt32();
 
                     var budget_formatted = item.Value.GetProperty("budget_formatted");
-                    if (budget_formatted.ValueKind != JsonValueKind.Undefined && budget_formatted.ValueKind != JsonValueKind.Null)
-                    {
-                        ;
-                    }
 
                     lead.CanEdit = item.Value.GetProperty("can_edit").GetBoolean();
 
@@ -61,10 +57,6 @@ namespace AmoClient
                     if (source_data.ValueKind == JsonValueKind.Object)
                     {
                         var count = source_data.EnumerateObject().ToList().Count();
-                        if (count != 1)
-                        {
-                            ;
-                        }
                         lead.source_data_name = source_data.GetProperty("name").GetString();
                     }
 
@@ -90,30 +82,10 @@ namespace AmoClient
                     lead.lead_mark = item.Value.GetProperty("lead_mark").GetString();
 
                     var loss_reason = item.Value.GetProperty("loss_reason");
-                    if (loss_reason.ValueKind != JsonValueKind.Null)
-                    {
-                        ;
-                    }
 
                     var last_event_at = item.Value.GetProperty("last_event_at");
-                    if (last_event_at.ValueKind != JsonValueKind.Null)
-                    {
-                        ;
-                    }
 
                     var last_message_at = item.Value.GetProperty("last_message_at");
-                    if (last_message_at.ValueKind != JsonValueKind.Null)
-                    {
-                        ;
-                    }
-
-                    //Console.WriteLine(lead.Id);
-                    //Console.WriteLine(lead.NameText);
-                    //Console.WriteLine(lead.NameUrl);
-                    //Console.WriteLine(lead.Status);
-                    //Console.WriteLine(lead.Budget);
-                    //Console.WriteLine(lead.CanEdit);
-                    //Console.WriteLine("-------------------");
                 }
             }
 
