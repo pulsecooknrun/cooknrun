@@ -73,8 +73,10 @@ namespace CookRun.Services
                 var sales = amoProxyService.GetSales(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var correctLeads = amoProxyService.GetCorrectLeads(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var gamesSoldThisMonth = amoProxyService.GetGamesSoldThisMonth(month, month.AddDays(DateTime.DaysInMonth(month.Year, month.Month) - 1), token, user.Id);
+                var amountOfSalesThisMonth = amoProxyService.GetAmountOfSalesThisMonth(month, month.AddDays(DateTime.DaysInMonth(month.Year, month.Month) - 1), token, user.Id);
                 var gameCompletedThisMonth = amoProxyService.GetGameCompletedThisMonth(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var gamesSoldNextMonth = amoProxyService.GetGamesSoldNextMonth(nextMonth, nextMonth.AddDays(DateTime.DaysInMonth(nextMonth.Year, nextMonth.Month) - 1), token, user.Id);
+                var amountOfSalesNextMonth = amoProxyService.GetAmountOfSalesNextMonth(nextMonth, nextMonth.AddDays(DateTime.DaysInMonth(nextMonth.Year, nextMonth.Month) - 1), token, user.Id);
 
                 var amoMonthReport = applicationContext.AmoMonthReports.FirstOrDefault(x => x.ProjectName == user.Name && x.Date == month);
                 if (amoMonthReport == null)
@@ -88,8 +90,10 @@ namespace CookRun.Services
                         Sales = sales,
                         CorrectLeads = correctLeads,
                         GamesSoldThisMonth = gamesSoldThisMonth,
+                        AmountOfSalesThisMonth = amountOfSalesThisMonth,
                         GameCompletedThisMonth = gameCompletedThisMonth,
-                        GamesSoldNextMonth = gamesSoldNextMonth
+                        GamesSoldNextMonth = gamesSoldNextMonth,
+                        AmountOfSalesNextMonth = amountOfSalesNextMonth
                     };
                     applicationContext.AmoMonthReports.Add(amoMonthReport);
                 }
@@ -100,8 +104,10 @@ namespace CookRun.Services
                     amoMonthReport.Sales = sales;
                     amoMonthReport.CorrectLeads = correctLeads;
                     amoMonthReport.GamesSoldThisMonth = gamesSoldThisMonth;
+                    amoMonthReport.AmountOfSalesThisMonth = amountOfSalesThisMonth;
                     amoMonthReport.GameCompletedThisMonth = gameCompletedThisMonth;
                     amoMonthReport.GamesSoldNextMonth = gamesSoldNextMonth;
+                    amoMonthReport.AmountOfSalesNextMonth = amountOfSalesNextMonth;
                 }
 
                 for (int i = 0; i < 10; i++)

@@ -2,7 +2,7 @@
 
 namespace AmoClient
 {
-    public class LeadsByStatu
+    public class LeadsByStatus
     {
         public int status { get; set; }
         public int count { get; set; }
@@ -14,7 +14,7 @@ namespace AmoClient
 
     public class AmoSumResponce
     {
-        public List<LeadsByStatu> leads_by_status { get; set; }
+        public List<LeadsByStatus> leads_by_status { get; set; }
         public int all_count { get; set; }
     }
 }

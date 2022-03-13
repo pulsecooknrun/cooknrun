@@ -285,8 +285,18 @@ namespace AmoClient
 
         public int GetAmountOfSalesThisMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
 		{
-            return 0;
-		}
+            var parameters = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                    new Tuple<string, string>("filter[cf][1137099][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][1137099][to]", endDateTime.ToString("dd.MM.yyyy")),
+                };
+            var amountOfSales = GetCountOfPrice(token, "4406959", parameters, null, null, userId);
+
+            return amountOfSales;
+        }
 
         public int GetGameCompletedThisMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
 		{
@@ -320,8 +330,18 @@ namespace AmoClient
 
         public int GetAmountOfSalesNextMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
 		{
-            return 0;
-		}
+            var parameters = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                    new Tuple<string, string>("filter[cf][1137099][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][1137099][to]", endDateTime.ToString("dd.MM.yyyy")),
+                };
+            var amountOfSales = GetCountOfPrice(token, "4406959", parameters, null, null, userId);
+
+            return amountOfSales;
+        }
 
         public int GetCount(string token, string dealType, List<Tuple<string, string>> roistatFilterItemNos, DateTime? startDate, DateTime? endDate, string user)
         {
@@ -362,6 +382,53 @@ namespace AmoClient
             EnsureSuccessStatusCode(response);
 
             return response.Data.all_count;
+        }
+
+        public int GetCountOfPrice(string token, string dealType, List<Tuple<string, string>> roistatFilterItemNos, DateTime? startDate, DateTime? endDate, string user)
+        {
+            var client = new RestClient("https://infernocook.amocrm.ru/ajax/leads/sum/" + dealType);
+            var request = new RestRequest(Method.POST);
+
+            foreach (var roistatFilterItemNo in roistatFilterItemNos)
+            {
+                request.AddQueryParameter(roistatFilterItemNo.Item1, roistatFilterItemNo.Item2);
+            }
+
+            request.AddQueryParameter("filter[tags_logic]", "or");
+            request.AddQueryParameter("filter[main_user][]", user);
+            request.AddQueryParameter("useFilter", "y");
+
+            if (startDate != null)
+                request.AddQueryParameter("filter_date_from", startDate.Value.ToString("dd.MM.yyyy"));
+            if (endDate != null)
+                request.AddQueryParameter("filter_date_to", endDate.Value.ToString("dd.MM.yyyy"));
+
+            request.AddHeader("Cookie", token);
+            request.AddHeader("content-type", "application/json");
+            request.AddHeader("sec-ch-ua", "'Google Chrome';v='95', 'Chromium';v='95', '; Not A Brand';v='99'");
+            request.AddHeader("Accept", "application/json, text/javascript, */*; q=0.01");
+            request.AddHeader("X-Requested-With", "XMLHttpRequest");
+            request.AddHeader("sec-ch-ua-mobile", "?0");
+            request.AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36");
+            request.AddHeader("sec-ch-ua-platform", "'Windows'");
+            request.AddHeader("Origin", "https://infernocook.amocrm.ru");
+            request.AddHeader("Sec-Fetch-Site", "same-origin");
+            request.AddHeader("Sec-Fetch-Mode", "cors");
+            request.AddHeader("Sec-Fetch-Dest", "empty");
+            request.AddHeader("Accept-Language", "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7");
+
+            request.AddJsonBody(new AmoSumRequest());
+
+            var response = client.Execute<AmoSumResponce>(request);
+            EnsureSuccessStatusCode(response);
+
+            int countOfPrice = 0;
+            foreach(var item in response.Data.leads_by_status)
+			{
+                countOfPrice += item.total_price;
+			}
+
+            return countOfPrice;
         }
     }
 
