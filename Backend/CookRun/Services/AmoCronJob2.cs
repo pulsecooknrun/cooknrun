@@ -88,7 +88,7 @@ namespace CookRun.Services
                         Leads = leads,
                         Closed = closed,
                         Sales = sales,
-                        CorrectLeads = correctLeads,
+                        CorrectLeads = correctLeads + sales,
                         GamesSoldThisMonth = gamesSoldThisMonth,
                         AmountOfSalesThisMonth = amountOfSalesThisMonth,
                         GameCompletedThisMonth = gameCompletedThisMonth,
@@ -102,7 +102,7 @@ namespace CookRun.Services
                     amoMonthReport.Leads = leads;
                     amoMonthReport.Closed = closed;
                     amoMonthReport.Sales = sales;
-                    amoMonthReport.CorrectLeads = correctLeads;
+                    amoMonthReport.CorrectLeads = correctLeads + sales;
                     amoMonthReport.GamesSoldThisMonth = gamesSoldThisMonth;
                     amoMonthReport.AmountOfSalesThisMonth = amountOfSalesThisMonth;
                     amoMonthReport.GameCompletedThisMonth = gameCompletedThisMonth;
