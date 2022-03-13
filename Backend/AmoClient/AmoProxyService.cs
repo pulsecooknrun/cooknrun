@@ -268,6 +268,61 @@ namespace AmoClient
               return correctLeadsSale + correctLeadsGame;
           }
 
+        public int GetGamesSoldThisMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
+		{
+            var parameters = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                    new Tuple<string, string>("filter[cf][1137099][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][1137099][to]", endDateTime.ToString("dd.MM.yyyy")),
+                };
+            var gamesSold = GetCount(token, "4406959", parameters, null, null, userId);
+
+            return gamesSold;
+		}
+
+        public int GetAmountOfSalesThisMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
+		{
+            return 0;
+		}
+
+        public int GetGameCompletedThisMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
+		{
+            var parameters = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                    new Tuple<string, string>("filter[cf][1137099][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][1137099][to]", endDateTime.ToString("dd.MM.yyyy")),
+                };
+            var gameCompleted = GetCount(token, "4406959", parameters, null, null, userId);
+
+            return gameCompleted;
+		}
+
+        public int GetGamesSoldNextMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
+		{
+            var parameters = new List<Tuple<string, string>>
+                {
+                    new Tuple<string, string>("filter[pipe][4406959][]", "142"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
+                    new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
+                    new Tuple<string, string>("filter[cf][1137099][from]", startDateTime.ToString("dd.MM.yyyy")),
+                    new Tuple<string, string>("filter[cf][1137099][to]", endDateTime.ToString("dd.MM.yyyy")),
+                };
+            var gamesSold = GetCount(token, "4406959", parameters, null, null, userId);
+
+            return gamesSold;
+        }
+
+        public int GetAmountOfSalesNextMonth(DateTime startDateTime, DateTime endDateTime, string token, string userId)
+		{
+            return 0;
+		}
+
         public int GetCount(string token, string dealType, List<Tuple<string, string>> roistatFilterItemNos, DateTime? startDate, DateTime? endDate, string user)
         {
             var client = new RestClient("https://infernocook.amocrm.ru/ajax/leads/sum/" + dealType);

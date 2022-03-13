@@ -66,12 +66,15 @@ namespace CookRun.Services
             foreach (var user in users)
             {
                 var month = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                var nextMonth = month.AddMonths(1);
 
                 var leads = amoProxyService.GetLeads(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var closed = amoProxyService.GetClosed(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var sales = amoProxyService.GetSales(month, DateTime.Today.AddDays(-1), token, user.Id);
                 var correctLeads = amoProxyService.GetCorrectLeads(month, DateTime.Today.AddDays(-1), token, user.Id);
-
+                var gamesSoldThisMonth = amoProxyService.GetGamesSoldThisMonth(month, month.AddDays(DateTime.DaysInMonth(month.Year, month.Month) - 1), token, user.Id);
+                var gameCompletedThisMonth = amoProxyService.GetGameCompletedThisMonth(month, DateTime.Today.AddDays(-1), token, user.Id);
+                var gamesSoldNextMonth = amoProxyService.GetGamesSoldNextMonth(nextMonth, nextMonth.AddDays(DateTime.DaysInMonth(nextMonth.Year, nextMonth.Month) - 1), token, user.Id);
 
                 var amoMonthReport = applicationContext.AmoMonthReports.FirstOrDefault(x => x.ProjectName == user.Name && x.Date == month);
                 if (amoMonthReport == null)
@@ -83,7 +86,10 @@ namespace CookRun.Services
                         Leads = leads,
                         Closed = closed,
                         Sales = sales,
-                        CorrectLeads = correctLeads
+                        CorrectLeads = correctLeads,
+                        GamesSoldThisMonth = gamesSoldThisMonth,
+                        GameCompletedThisMonth = gameCompletedThisMonth,
+                        GamesSoldNextMonth = gamesSoldNextMonth
                     };
                     applicationContext.AmoMonthReports.Add(amoMonthReport);
                 }
@@ -93,6 +99,9 @@ namespace CookRun.Services
                     amoMonthReport.Closed = closed;
                     amoMonthReport.Sales = sales;
                     amoMonthReport.CorrectLeads = correctLeads;
+                    amoMonthReport.GamesSoldThisMonth = gamesSoldThisMonth;
+                    amoMonthReport.GameCompletedThisMonth = gameCompletedThisMonth;
+                    amoMonthReport.GamesSoldNextMonth = gamesSoldNextMonth;
                 }
 
                 for (int i = 0; i < 10; i++)
