@@ -138,6 +138,11 @@ namespace RoistatApi.Controllers
                     amoFullReport.MonthLeads = monthReport.Leads;
                     amoFullReport.MonthSales = monthReport.Sales;
                     amoFullReport.MonthCorrectLeads = monthReport.CorrectLeads;
+                    amoFullReport.GamesSoldThisMonth = monthReport.GamesSoldThisMonth;
+                    amoFullReport.AmountOfSalesThisMonth = monthReport.AmountOfSalesThisMonth;
+                    amoFullReport.GameCompletedThisMonth = monthReport.GameCompletedThisMonth;
+                    amoFullReport.GamesSoldNextMonth = monthReport.GamesSoldNextMonth;
+                    amoFullReport.AmountOfSalesNextMonth = monthReport.AmountOfSalesNextMonth;
                 }
 
                 if (amoFullReport.MonthCorrectLeads != 0)
@@ -262,28 +267,6 @@ namespace RoistatApi.Controllers
 
     }
 
-    /*
-    public class AmoSummReport
-    {
-        public string Project { get; set; }
-        public int TodayLeads { get; set; }
-        public int MonthLeads { get; set; }
-        public int MonthCorrectLeads { get; set; }
-        public int TodayOverdue { get; set; }
-        public int TodayLeadsWithoutTasks { get; set; }
-        public int TodayForehead { get; set; }
-        public int TodaySales { get; set; }
-        public int MonthSales { get; set; }
-        //public int TodayClosedLeads { get; set; }
-        //public int MonthClosedLeads { get; set; }
-        //public int OverdueTrend { get; set; }
-        //public int OverdueTrendPercents { get; set; }
-        //public int LeadsWithoutTasksTrend { get; set; }
-        //public int LeadsWithoutTasksTrendPercents { get; set; }
-        public decimal Conversion { get; set; }
-    }
-    */
-
     public class AmoFullReport
 	{
         public string Project { get; set; }
@@ -296,6 +279,11 @@ namespace RoistatApi.Controllers
         public int TodaySales { get; set; }
         public int MonthSales { get; set; }
         public decimal Conversion { get; set; }
+        public int GamesSoldThisMonth { get; set; }
+        public int AmountOfSalesThisMonth { get; set; }
+        public int GameCompletedThisMonth { get; set; }
+        public int GamesSoldNextMonth { get; set; }
+        public int AmountOfSalesNextMonth { get; set; }
     }
 
     public class AmoSalesReport
