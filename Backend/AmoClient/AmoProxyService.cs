@@ -263,7 +263,7 @@ namespace AmoClient
                       new Tuple<string, string>("filter[pipe][4406959][]", "40928554"),
                       new Tuple<string, string>("filter[pipe][4406959][]", "40928557"),
                   };
-              var correctLeadsGame = GetCount(token, "4406959", parametersGame, startDateTime, endDateTime, userId);
+              var correctLeadsGame = GetCount(token, "4406959", parametersGame, null, null, userId);
 
               return correctLeadsSale + correctLeadsGame;
           }
