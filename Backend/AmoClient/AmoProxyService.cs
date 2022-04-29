@@ -11,7 +11,7 @@ namespace AmoClient
         //string _password = "Kjc-e6z-LSY-DdL";
 
         string _login = "anna.admarketing@yandex.ru";
-        string _password = "sD9-94w-mwD-ucw";
+        string _password = "sD9-94w-mwD-aww";
 
         public AmoProxyService()
         {
